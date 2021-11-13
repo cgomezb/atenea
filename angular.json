@@ -161,34 +161,6 @@
         }
       },
       "tags": []
-    },
-    "atenea-e2e": {
-      "root": "apps/atenea-e2e",
-      "sourceRoot": "apps/atenea-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/atenea-e2e/cypress.json",
-            "devServerTarget": "atenea:serve:development"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "atenea:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/atenea-e2e/**/*.{js,ts}"]
-          }
-        }
-      },
-      "tags": [],
-      "implicitDependencies": ["atenea"]
     }
   }
 }
