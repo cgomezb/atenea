@@ -22,6 +22,14 @@ export interface UserResponse {
   totalCount: number;
 }
 
+export interface CreateUserResponse {
+  user: User;
+}
+
+export interface DeleteUserResponse {
+  userId: string;
+}
+
 
 // Learning
 export interface Learning {
