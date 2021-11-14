@@ -17,7 +17,7 @@ export interface UserRequest {
 }
 
 // Response
-export interface UsersResponse {
+export interface UserResponse {
   users?: User[];
   totalCount: number;
 }
