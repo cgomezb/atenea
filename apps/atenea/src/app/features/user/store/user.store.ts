@@ -10,7 +10,6 @@ export interface UserState extends EntityState<User, string> {
 
 function createInitialState(): UserState {
   return {
-    users: null,
     totalCount: 0,
     query: '',
     page: { page: 1, offset: 0, count: 10 }

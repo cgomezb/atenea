@@ -39,7 +39,18 @@ export class UserComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => console.log('Created'),
-        () => console.log('Error creating')
+        (err) => console.log(`Error deleting user: ${err}`)
+      );
+  }
+
+  onUserDeleted(): void {
+    const userId = 'de45deee-f0d4-4ead-a0d8-644d4ccda8c6';
+  
+    this.userService.deleteUser(userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => console.log('Deleted'),
+        (err) => console.log(`Error deleting user: ${err}`)
       );
   }
 

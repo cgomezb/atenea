@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { User, UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { CreateUserResponse, DeleteUserResponse, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
 import { environment } from '../../../../environments/environment';
 import { combineLatest, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { UserStore } from "./user.store";
 })
 
 export class UserService {
-  private url = '';
+  private baseUrl = '';
 
   constructor(
     private store: UserStore,
@@ -26,9 +26,14 @@ export class UserService {
     this.store.update({ ...parameters });
   }
 
-  public createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.url, user)
-      .pipe(tap((user: User) => this.store.add([user])));
+  public createUser(user: User): Observable<CreateUserResponse> {
+    return this.http.post<CreateUserResponse>(this.baseUrl, user)
+      .pipe(tap(({ user }: CreateUserResponse) => this.store.add(user)));
+  }
+
+  public deleteUser(userId: string): Observable<DeleteUserResponse> {
+    return this.http.delete<DeleteUserResponse>(`${this.baseUrl}${userId}`)
+      .pipe(tap(({ userId }: DeleteUserResponse) => this.store.remove(userId)));
   }
 
   private setupService(): void {
@@ -37,7 +42,7 @@ export class UserService {
   }
 
   private setupUrlPath(): void {
-    this.url = environment.apis.user;
+    this.baseUrl = environment.apis.user;
   }
 
   private startParametersListener() {
@@ -49,10 +54,11 @@ export class UserService {
     const params = this.getParameters(userParameters);
 
     this.store.setLoading(true);
-    this.http.get<UserResponse>(this.url, { params })
+    this.http.get<UserResponse>(this.baseUrl, { params })
       .subscribe(
-        ({ users }: UserResponse) => {
+        ({ users, totalCount }: UserResponse) => {
           this.store.set(users);
+          this.store.update({ totalCount });
           this.store.setLoading(false);
         },
         () => {
