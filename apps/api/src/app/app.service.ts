@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { LearningStatus, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { CreateUserResponse, DeleteUserResponse, LearningStatus, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class AppService {
   private users: User[] = [
     {
-      id: '1',
+      id: 'de45deee-f0d4-4ead-a0d8-644d4ccda8c6',
       name: 'John Smith',
       email: 'jsmith@email.com',
       learnings: [
@@ -28,21 +28,17 @@ export class AppService {
     };
   }
 
-  public createUser(user: User): User {
-    console.log(user);
-
+  public createUser(user: User): CreateUserResponse {
     user.id = this.generateId();
     this.users.push(user);
 
-    return { ...user };
+    return { user };
   }
 
-  public deleteUser(userId: string): string {
-    console.log(userId);
-  
+  public deleteUser(userId: string): DeleteUserResponse {
     this.users = this.users.filter(user => user.id !== userId);
   
-    return userId;
+    return { userId };
   }
 
   private generateId(): string {

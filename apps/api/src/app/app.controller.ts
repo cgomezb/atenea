@@ -1,28 +1,28 @@
-import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 
-import { User, UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { CreateUserResponse, DeleteUserResponse, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
 import { Delay } from './../shared/decorators';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('users/')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('users')
+  @Get()
   @Delay(1000)
   getUsers(@Query() userParameters: UserParameters): UserResponse {
     return this.appService.getUsers(userParameters);
   }
 
-  @Post('users')
+  @Post()
   @Delay(1000)
-  createUser(@Body() user: User): User {
+  createUser(@Body() user: User): CreateUserResponse {
     return this.appService.createUser(user);
   }
 
-  @Delete('users')
+  @Delete(':id')
   @Delay(1000)
-  deleteUser(@Body() userId: string): string {
+  deleteUser(@Param('id') userId: string): DeleteUserResponse {
     return this.appService.deleteUser(userId);
   }
 }
