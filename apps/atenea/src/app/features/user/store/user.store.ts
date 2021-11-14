@@ -1,12 +1,16 @@
-import { Store, StoreConfig } from '@datorama/akita';
+import { EntityStore, StoreConfig, EntityState } from '@datorama/akita';
 import { Injectable } from "@angular/core";
-import { UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { Page, User } from '@atenea/api-interfaces';
 
-export type UserState = UserParameters & UserResponse;
+export interface UserState extends EntityState<User, string> {
+  totalCount: number;
+  query: string;
+  page: Page;
+}
 
 function createInitialState(): UserState {
   return {
-    users: [],
+    users: null,
     totalCount: 0,
     query: '',
     page: { page: 1, offset: 0, count: 10 }
@@ -18,7 +22,7 @@ function createInitialState(): UserState {
   providedIn: 'root'
 })
 
-export class UserStore extends Store<UserState> {
+export class UserStore extends EntityStore<UserState> {
   constructor() {
     super(createInitialState());
   }

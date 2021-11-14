@@ -1,4 +1,4 @@
-import { Query } from '@datorama/akita';
+import { QueryEntity } from '@datorama/akita';
 import { Injectable } from "@angular/core";
 import { UserState, UserStore } from "./user.store";
 
@@ -6,8 +6,8 @@ import { UserState, UserStore } from "./user.store";
   providedIn: 'root'
 })
 
-export class UserQuery extends Query<UserState> {
-  public users$ = this.select('users');
+export class UserQuery extends QueryEntity<UserState> {
+  public users$ = this.selectAll();
   public totalCount$ = this.select('totalCount');
   public query$ = this.select('query');
   public page$ = this.select('page');

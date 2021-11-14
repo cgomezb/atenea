@@ -4,10 +4,10 @@ export interface Message {
 
 // User
 export interface User {
-  id: string;
+  id?: string;
   name: string;
   email: string;
-  learnings: Learning[];
+  learnings?: Learning[];
 }
 
 // Parameters
@@ -18,7 +18,7 @@ export interface UserParameters {
 
 // Response
 export interface UserResponse {
-  users?: User[];
+  users: User[];
   totalCount: number;
 }
 
