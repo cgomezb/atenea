@@ -1,8 +1,8 @@
 import { Store, StoreConfig } from '@datorama/akita';
 import { Injectable } from "@angular/core";
-import { UserRequest, UserResponse } from '@atenea/api-interfaces';
+import { UserParameters, UserResponse } from '@atenea/api-interfaces';
 
-export type UsersState = UserRequest & UserResponse;
+export type UsersState = UserParameters & UserResponse;
 
 function createInitialState(): UsersState {
   return {

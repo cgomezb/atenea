@@ -10,8 +10,8 @@ export interface User {
   learnings: Learning[];
 }
 
-// Request
-export interface UserRequest {
+// Parameters
+export interface UserParameters {
   query?: string;
   page: Page;
 }
