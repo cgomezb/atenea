@@ -37,6 +37,14 @@ export class AppService {
     return { ...user };
   }
 
+  public deleteUser(userId: string): string {
+    console.log(userId);
+  
+    this.users = this.users.filter(user => user.id !== userId);
+  
+    return userId;
+  }
+
   private generateId(): string {
     return uuid();
   }
