@@ -2,9 +2,9 @@ import { Store, StoreConfig } from '@datorama/akita';
 import { Injectable } from "@angular/core";
 import { UserParameters, UserResponse } from '@atenea/api-interfaces';
 
-export type UsersState = UserParameters & UserResponse;
+export type UserState = UserParameters & UserResponse;
 
-function createInitialState(): UsersState {
+function createInitialState(): UserState {
   return {
     users: [],
     totalCount: 0,
@@ -18,7 +18,7 @@ function createInitialState(): UsersState {
   providedIn: 'root'
 })
 
-export class UsersStore extends Store<UsersState> {
+export class UserStore extends Store<UserState> {
   constructor() {
     super(createInitialState());
   }

@@ -13,7 +13,7 @@ export interface User {
 // Parameters
 export interface UserParameters {
   query?: string;
-  page: Page;
+  page?: Page;
 }
 
 // Response

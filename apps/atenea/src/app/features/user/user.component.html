@@ -1,5 +1,9 @@
 <div class="user">
   <div class="user__container">
+
+    <button (click)="onSearchChanged()">Search</button>
+    <button (click)="onPageChanged()">Page</button>
+
     <div class="user-header">
       <div class="user-header__search-control">
         Search
@@ -11,6 +15,8 @@
     <div class="user-body">
       <div class="user-body__table">
         Table
+
+        {{(userQuery.users$ | async) | json}}
       </div>
       <div class="user-body__pagination">
         Pagination

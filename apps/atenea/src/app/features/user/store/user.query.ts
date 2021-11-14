@@ -1,14 +1,18 @@
 import { Query } from '@datorama/akita';
 import { Injectable } from "@angular/core";
-import { UsersState, UsersStore } from "./user.store";
+import { UserState, UserStore } from "./user.store";
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class UsersQuery extends Query<UsersState> {
+export class UserQuery extends Query<UserState> {
+  public users$ = this.select('users');
+  public totalCount$ = this.select('totalCount');
+  public query$ = this.select('query');
+  public page$ = this.select('page');
 
-  constructor(protected store: UsersStore) {
+  constructor(protected store: UserStore) {
     super(store);
   }
 }
