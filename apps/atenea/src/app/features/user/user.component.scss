@@ -1,0 +1,45 @@
+.user {
+  width: 100%;
+  min-height: 800px;
+
+  &__container {
+    background-color: #ffffff;
+    max-width: 1200px;
+    margin: 80px auto;
+    border: 1px solid #e5e5e5;
+    box-shadow: 3px 4px 17px 2px rgb(10 20 29 / 10%);
+  }
+}
+
+.user-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-content: center;
+  padding: 20px;
+
+  &__search-control {
+
+  }
+
+  &__actions {
+
+  }
+}
+
+.user-body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  align-content: stretch;
+  height: 100%;
+  padding: 20px;
+  
+  &__table {
+    padding-bottom: 20px;
+  }
+
+  &__pagination {
+
+  }
+}
