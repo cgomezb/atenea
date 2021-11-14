@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LearningStatus, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class AppService {
@@ -18,12 +19,25 @@ export class AppService {
     }
   ];
 
-  getUsers(userParameters: UserParameters): UserResponse {
+  public getUsers(userParameters: UserParameters): UserResponse {
     console.log(userParameters);
 
     return {
       users: this.users,
       totalCount: this.users.length
-     };
+    };
+  }
+
+  public createUser(user: User): User {
+    console.log(user);
+
+    user.id = this.generateId();
+    this.users.push(user);
+
+    return { ...user };
+  }
+
+  private generateId(): string {
+    return uuid();
   }
 }
