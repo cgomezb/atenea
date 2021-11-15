@@ -17,14 +17,6 @@
   justify-content: space-between;
   align-content: center;
   padding: 20px;
-
-  &__search-control {
-
-  }
-
-  &__actions {
-
-  }
 }
 
 .user-body {
@@ -33,13 +25,10 @@
   align-items: stretch;
   align-content: stretch;
   height: 100%;
-  padding: 20px;
-  
-  &__table {
-    padding-bottom: 20px;
-  }
+  padding-top: 20px;
 
   &__pagination {
-
+    padding: 20px;
+    border: 1px solid #d0d0d0;
   }
 }
