@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { CreateUserResponse, DeleteUserResponse, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { CreateUserResponse, DeleteUserResponse, Page, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
 import { environment } from '../../../../environments/environment';
 import { combineLatest, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserQuery } from "./user.query";
 import { UserStore } from "./user.store";
+import { defaultPagination } from '..';
 
 @Injectable({
   providedIn: 'root'
@@ -28,12 +29,12 @@ export class UserService {
 
   public createUser(user: User): Observable<CreateUserResponse> {
     return this.http.post<CreateUserResponse>(this.baseUrl, user)
-      .pipe(tap(({ user }: CreateUserResponse) => this.store.add(user)));
+      .pipe(tap(() => this.reloadUsers()));
   }
 
   public deleteUser(userId: string): Observable<DeleteUserResponse> {
     return this.http.delete<DeleteUserResponse>(`${this.baseUrl}${userId}`)
-      .pipe(tap(({ userId }: DeleteUserResponse) => this.store.remove(userId)));
+      .pipe(tap(() => this.reloadUsers()));
   }
 
   private setupService(): void {
@@ -48,6 +49,11 @@ export class UserService {
   private startParametersListener() {
     combineLatest([ this.usersQuery.query$, this.usersQuery.page$ ])
       .subscribe(([ query, page ]) => this.getUsers({ query, page }));
+  }
+
+  private reloadUsers(): void {
+    const page: Page = defaultPagination;
+    this.getUsers({ page });
   }
 
   private getUsers(userParameters: Partial<UserParameters>): void {

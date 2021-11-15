@@ -9,13 +9,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Delay(1000)
+  @Delay(500)
   getUsers(@Query() userParameters: UserParameters): UserResponse {
     return this.appService.getUsers(userParameters);
   }
 
   @Post()
-  @Delay(1000)
+  @Delay(500)
   createUser(@Body() user: User): CreateUserResponse {
     return this.appService.createUser(user);
   }

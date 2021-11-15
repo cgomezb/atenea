@@ -1,6 +1,7 @@
 import { EntityStore, StoreConfig, EntityState } from '@datorama/akita';
 import { Injectable } from "@angular/core";
 import { Page, User } from '@atenea/api-interfaces';
+import { defaultPagination } from '../';
 
 export interface UserState extends EntityState<User, string> {
   totalCount: number;
@@ -8,11 +9,11 @@ export interface UserState extends EntityState<User, string> {
   page: Page;
 }
 
-function createInitialState(): UserState {
+function createInitialState(page: Page): UserState {
   return {
     totalCount: 0,
     query: '',
-    page: { page: 1, offset: 0, count: 10 }
+    page
   };
 }
 
@@ -23,6 +24,6 @@ function createInitialState(): UserState {
 
 export class UserStore extends EntityStore<UserState> {
   constructor() {
-    super(createInitialState());
+    super(createInitialState(defaultPagination));
   }
 }
