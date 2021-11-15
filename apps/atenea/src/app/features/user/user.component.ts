@@ -1,9 +1,11 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
 import { Page, User } from '@atenea/api-interfaces';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { UserService, UserQuery, defaultPagination } from '.';
 import { PageOption, pageOptions } from '../../shared/pagination/pagination-model';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
 
 @Component({
   selector: 'atenea-user',
@@ -14,17 +16,21 @@ import { PageOption, pageOptions } from '../../shared/pagination/pagination-mode
 
 export class UserComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<string>();
-  headers = ['Avatar', 'Name', 'Email', 'Actions'];
+  headers: string[] = ['Avatar', 'Name', 'Email', 'Actions'];
   pageOption = defaultPagination;
   pageOptions: PageOption[] = pageOptions;
 
+  createDialogConfig: MatDialogConfig = new MatDialogConfig();
+
   constructor(
     private userService: UserService,
-    public userQuery: UserQuery
+    public userQuery: UserQuery,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.userService.setParameters({ page: defaultPagination });
+    this.setCreateDialogConfiguration();
   }
 
   onSearchChanged(query: string): void {
@@ -36,19 +42,14 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onUserCreated(): void {
-    const user: User = {
-      name: "Jackson Lee", 
-      email: "jlee@email.com"
-    };
-  
-    this.userService.createUser(user)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        () => {
-          console.log('Created');
-        },
-        (err) => console.log(`Error deleting user: ${err}`)
-      );
+    const dialogRef = this.dialog.open(CreateUserDialogComponent, this.createDialogConfig);
+    
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(user => Boolean(user))
+      )
+      .subscribe(user => this.createUser(user)); 
   }
 
   onUserDeleted({ id }: User): void {
@@ -64,12 +65,32 @@ export class UserComponent implements OnInit, OnDestroy {
       );
   }
 
-  onModalOpened(user: User) {
+  onLearningDialogOpened(user: User) {
     console.log(user);
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private setCreateDialogConfiguration(): void {
+    this.createDialogConfig = {
+      disableClose: true,
+      autoFocus: true,
+      width: '300px',
+      height: '330px'
+    };
+  }
+
+  private createUser(user: User): void {  
+    this.userService.createUser(user)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Created');
+        },
+        (err) => console.log(`Error deleting user: ${err}`)
+      );
   }
 }
