@@ -6,6 +6,7 @@ import { UserService, UserQuery, defaultPagination } from '.';
 import { PageOption, pageOptions } from '../../shared/pagination/pagination-model';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
+import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'atenea-user',
@@ -21,6 +22,7 @@ export class UserComponent implements OnInit, OnDestroy {
   pageOptions: PageOption[] = pageOptions;
 
   createDialogConfig: MatDialogConfig = new MatDialogConfig();
+  deleteDialogConfig: MatDialogConfig = new MatDialogConfig();
 
   constructor(
     private userService: UserService,
@@ -31,6 +33,7 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userService.setParameters({ page: defaultPagination });
     this.setCreateDialogConfiguration();
+    this.setDeleteDialogConfiguration();
   }
 
   onSearchChanged(query: string): void {
@@ -49,20 +52,20 @@ export class UserComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         filter(user => Boolean(user))
       )
-      .subscribe(user => this.createUser(user)); 
+      .subscribe(user => this.createUser(user));
   }
 
   onUserDeleted({ id }: User): void {
     if (!id) { return; }
-  
-    this.userService.deleteUser(id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        () => {
-          console.log('Deleted');
-        },
-        (err) => console.log(`Error deleting user: ${err}`)
-      );
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, this.deleteDialogConfig);
+    
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(toDelete => Boolean(toDelete))
+      )
+      .subscribe(() => this.deleteUser(id));
   }
 
   onLearningDialogOpened(user: User) {
@@ -83,12 +86,36 @@ export class UserComponent implements OnInit, OnDestroy {
     };
   }
 
+  private setDeleteDialogConfiguration(): void {
+    this.deleteDialogConfig = {
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        title: 'Delete user',
+        message: `Are you sure do you want to delete the user?`
+      }
+    };
+  }
+
   private createUser(user: User): void {  
     this.userService.createUser(user)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
           console.log('Created');
+        },
+        (err) => console.log(`Error deleting user: ${err}`)
+      );
+  }
+
+  private deleteUser(id: string): void {
+    if (!id) { return; }
+  
+    this.userService.deleteUser(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Deleted');
         },
         (err) => console.log(`Error deleting user: ${err}`)
       );
