@@ -4,12 +4,14 @@ import { LoaderComponent } from './loader/loader.component';
 import { SearchControlComponent } from './search-control/search-control.component';
 import { FormsModule } from '@angular/forms';
 import { ListComponent } from './list/list.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
     LoaderComponent,
     SearchControlComponent,
-    ListComponent
+    ListComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { ListComponent } from './list/list.component';
   exports: [
     LoaderComponent,
     SearchControlComponent,
-    ListComponent
+    ListComponent,
+    PaginationComponent
   ]
 })
 
