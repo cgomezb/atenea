@@ -2,7 +2,8 @@ import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Page, User } from '@atenea/api-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UserService, UserQuery } from '.';
+import { UserService, UserQuery, defaultPagination } from '.';
+import { PageOption, pageOptions } from '../../shared/pagination/pagination-model';
 
 @Component({
   selector: 'atenea-user',
@@ -14,6 +15,8 @@ import { UserService, UserQuery } from '.';
 export class UserComponent implements OnDestroy {
   destroy$ = new Subject<string>();
   headers = ['Avatar', 'Name', 'Email', 'Actions'];
+  pageOption = defaultPagination;
+  pageOptions: PageOption[] = pageOptions;
 
   constructor(
     private userService: UserService,
@@ -24,8 +27,7 @@ export class UserComponent implements OnDestroy {
     this.userService.setParameters({ query });
   }
 
-  onPageChanged(): void {
-    const page: Page = { page: 2, offset: 10, count: 10 };
+  onPageChanged(page: Page): void {
     this.userService.setParameters({ page });
   }
 

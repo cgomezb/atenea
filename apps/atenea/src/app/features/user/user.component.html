@@ -38,9 +38,11 @@
         </atenea-list>
       </div>
       <div class="user-body__pagination">
-        Pagination {{userQuery.totalCount$ | async }}
-
-        <button (click)="onPageChanged()">Page</button>
+        <atenea-pagination
+          [paging]="(userQuery.paging$ | async)"
+          [options]="pageOptions"
+          (pageChanged)="onPageChanged($event)"
+        ></atenea-pagination>
       </div>
     </div>
 
