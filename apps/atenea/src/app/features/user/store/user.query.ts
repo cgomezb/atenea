@@ -11,7 +11,7 @@ export class UserQuery extends QueryEntity<UserState> {
   public totalCount$ = this.select('totalCount');
   public query$ = this.select('query');
   public page$ = this.select('page');
-  public isLoading$ = this.selectLoading();
+  public loading$ = this.selectLoading();
 
   constructor(protected store: UserStore) {
     super(store);

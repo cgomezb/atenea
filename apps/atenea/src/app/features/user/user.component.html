@@ -1,6 +1,11 @@
+<atenea-loader
+  *ngIf="(userQuery.loading$ | async) as loading"
+  [show]="loading"
+  [opacity]="0.85">
+</atenea-loader>
+
 <div class="user">
   <div class="user__container">
-    {{userQuery.isLoading$ | async}}
     <div class="user-header">
       <div class="user-header__search-control">
         <button (click)="onSearchChanged()">Search</button>
