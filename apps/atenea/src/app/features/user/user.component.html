@@ -8,7 +8,10 @@
   <div class="user__container">
     <div class="user-header">
       <div class="user-header__search-control">
-        <button (click)="onSearchChanged()">Search</button>
+        <atenea-search-control
+          (search)="onSearchChanged($event)"
+        ></atenea-search-control>
+
       </div>
       <div class="user-header__actions">
         <button (click)="onUserCreated()">New</button>

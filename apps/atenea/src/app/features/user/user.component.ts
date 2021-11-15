@@ -19,8 +19,7 @@ export class UserComponent implements OnDestroy {
     public userQuery: UserQuery
   ) {}
 
-  onSearchChanged(): void {
-    const query = 'test';
+  onSearchChanged(query: string): void {
     this.userService.setParameters({ query });
   }
 

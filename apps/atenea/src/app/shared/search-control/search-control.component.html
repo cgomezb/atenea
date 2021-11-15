@@ -1,0 +1,16 @@
+<div class="search-control">
+  <input
+    type="text"
+    class="search-control__input"
+    spellcheck="false"
+    autocomplete="false"
+    placeholder="Search"
+    maxlength="200"
+    [(ngModel)]="query"
+    (keyup.enter)="search.emit(query)"
+  >
+  <div class="search-control__clear" *ngIf="query" (click)="clear()">&times;</div>
+  <button class="search-control__action btn-primary" (click)="search.emit(query)">
+    Search
+  </button>
+</div>
