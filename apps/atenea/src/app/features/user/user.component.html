@@ -15,14 +15,27 @@
       </div>
       <div class="user-header__actions">
         <button (click)="onUserCreated()">New</button>
-        <button (click)="onUserDeleted()">Delete</button>
       </div>
     </div>
     <div class="user-body">
       <div class="user-body__table">
-        Table
-
-        {{(userQuery.users$ | async) | json}}
+        <atenea-list>
+          <thead table-header>
+            <tr>
+              <th *ngFor="let header of headers">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody table-body>
+            <tr *ngFor="let user of (userQuery.users$ | async)">
+              <td>{{user.id}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td>
+                <button (click)="onModalOpened(user)">Show Learnings</button>
+                <button (click)="onUserDeleted(user)">Delete</button>
+              </td>
+            </tr>
+        </atenea-list>
       </div>
       <div class="user-body__pagination">
         Pagination {{userQuery.totalCount$ | async }}

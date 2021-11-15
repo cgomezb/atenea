@@ -13,6 +13,7 @@ import { UserService, UserQuery } from '.';
 
 export class UserComponent implements OnDestroy {
   destroy$ = new Subject<string>();
+  headers = ['Avatar', 'Name', 'Email', 'Actions'];
 
   constructor(
     private userService: UserService,
@@ -37,20 +38,28 @@ export class UserComponent implements OnDestroy {
     this.userService.createUser(user)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => console.log('Created'),
+        () => {
+          console.log('Created');
+        },
         (err) => console.log(`Error deleting user: ${err}`)
       );
   }
 
-  onUserDeleted(): void {
-    const userId = 'de45deee-f0d4-4ead-a0d8-644d4ccda8c6';
+  onUserDeleted({ id }: User): void {
+    if (!id) { return; }
   
-    this.userService.deleteUser(userId)
+    this.userService.deleteUser(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => console.log('Deleted'),
+        () => {
+          console.log('Deleted');
+        },
         (err) => console.log(`Error deleting user: ${err}`)
       );
+  }
+
+  onModalOpened(user: User) {
+    console.log(user);
   }
 
   ngOnDestroy(): void {
