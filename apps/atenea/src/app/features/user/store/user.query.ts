@@ -1,4 +1,4 @@
-import { QueryEntity } from '@datorama/akita';
+import { Query } from '@datorama/akita';
 import { Injectable } from "@angular/core";
 import { UserState, UserStore } from "./user.store";
 import { map } from 'rxjs/operators';
@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-export class UserQuery extends QueryEntity<UserState> {
-  public users$ = this.selectAll();
+export class UserQuery extends Query<UserState> {
+  public users$ = this.select('users');
   public totalCount$ = this.select('totalCount');
   public query$ = this.select('query');
   public page$ = this.select('page');

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
 import { Page, User } from '@atenea/api-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { PageOption, pageOptions } from '../../shared/pagination/pagination-mode
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class UserComponent implements OnDestroy {
+export class UserComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<string>();
   headers = ['Avatar', 'Name', 'Email', 'Actions'];
   pageOption = defaultPagination;
@@ -22,6 +22,10 @@ export class UserComponent implements OnDestroy {
     private userService: UserService,
     public userQuery: UserQuery
   ) {}
+
+  ngOnInit(): void {
+    this.userService.setParameters({ page: defaultPagination });
+  }
 
   onSearchChanged(query: string): void {
     this.userService.setParameters({ query });
