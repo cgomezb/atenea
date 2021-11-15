@@ -10,7 +10,7 @@
     (keyup.enter)="search.emit(query)"
   >
   <div class="search-control__clear" *ngIf="query" (click)="clear()">&times;</div>
-  <button class="search-control__action btn-primary" (click)="search.emit(query)">
+  <button class="search-control__action" (click)="search.emit(query)">
     Search
   </button>
 </div>
