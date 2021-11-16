@@ -10,13 +10,20 @@ import { MatDialogRef} from "@angular/material/dialog";
 })
 export class CreateUserDialogComponent implements OnInit {
   public form: FormGroup;
-  public avatars = ['Avatar 1', 'Avatar 2', 'Avatar 3'];
+  public avatars = [
+    { name: 'Avatar 1', value: 1 },
+    { name: 'Avatar 2', value: 2 },
+    { name: 'Avatar 3', value: 3 },
+    { name: 'Avatar 4', value: 4 }
+  ];
 
   constructor(private dialogRef: MatDialogRef<CreateUserDialogComponent>) {}
 
   ngOnInit() {
+    const [defaultAvatar] = this.avatars;
+
     this.form = new FormGroup({
-      avatar: new FormControl(null),
+      avatar: new FormControl(defaultAvatar.value),
       name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
     });

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { UserService, UserQuery, defaultPagination } from '.';
 import { PageOption, pageOptions } from '../../shared/pagination/pagination-model';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
 import { LearningDialogComponent } from './learning-dialog/learning-dialog.component';
@@ -19,7 +19,6 @@ import { LearningDialogComponent } from './learning-dialog/learning-dialog.compo
 export class UserComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<string>();
   headers: string[] = ['Avatar', 'Name', 'Email', 'Actions'];
-  pageOption = defaultPagination;
   pageOptions: PageOption[] = pageOptions;
 
   createDialogConfig: MatDialogConfig = new MatDialogConfig();
@@ -39,11 +38,11 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onSearchChanged(query: string): void {
-    this.userService.setParameters({ query });
+    this.userService.setParameters({ query, page: defaultPagination });
   }
 
   onPageChanged(page: Page): void {
-    this.userService.setParameters({ page });
+    this.userService.setParameters({ query: this.userQuery.currentQuery(), page });
   }
 
   onUserCreated(): void {
@@ -54,7 +53,7 @@ export class UserComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         filter(user => Boolean(user))
       )
-      .subscribe(user => this.createUser(user));
+      .subscribe((user: User) => this.createUser(user));
   }
 
   onUserDeleted({ id }: User): void {
@@ -84,11 +83,6 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     this.dialog.open(LearningDialogComponent, this.learningDialogConfig);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   private setCreateDialogConfiguration(): void {
@@ -133,5 +127,10 @@ export class UserComponent implements OnInit, OnDestroy {
         },
         (err) => console.log(`Error deleting user: ${err}`)
       );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

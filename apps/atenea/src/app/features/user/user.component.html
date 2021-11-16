@@ -27,7 +27,9 @@
           </thead>
           <tbody table-body>
             <tr *ngFor="let user of (userQuery.users$ | async)">
-              <td>{{user.id}}</td>
+              <td>
+                <img class="loader__icon" src="assets/img/avatar-{{user.avatar}}.svg" [style.width.px]="50">
+              </td>
               <td>{{user.name}}</td>
               <td>{{user.email}}</td>
               <td class="user-actions">

@@ -5,14 +5,22 @@ export interface Message {
 // User
 export interface User {
   id?: string;
+  avatar: string;
   name: string;
   email: string;
   learnings?: string[];
 }
 
+export interface UserQueryParameters {
+  query: string;
+  page: string;
+  offset: string;
+  count: string;
+}
+
 // Parameters
 export interface UserParameters {
-  query?: string;
+  query: string;
   page: Page;
 }
 

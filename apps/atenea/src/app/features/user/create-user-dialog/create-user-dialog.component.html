@@ -6,7 +6,7 @@
       <mat-form-field>
         <mat-label>Avatar</mat-label>
         <mat-select formControlName="avatar">
-          <mat-option *ngFor="let avatar of avatars" [value]="avatar">{{avatar}}</mat-option>
+          <mat-option *ngFor="let avatar of avatars" [value]="avatar.value">{{avatar.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

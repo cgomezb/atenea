@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 
-import { CreateUserResponse, DeleteUserResponse, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { CreateUserResponse, DeleteUserResponse, User, UserQueryParameters, UserResponse } from '@atenea/api-interfaces';
 import { Delay } from './../shared/decorators';
 import { AppService } from './app.service';
 
@@ -10,7 +10,7 @@ export class AppController {
 
   @Get()
   @Delay(500)
-  getUsers(@Query() userParameters: UserParameters): UserResponse {
+  getUsers(@Query() userParameters: UserQueryParameters): UserResponse {
     return this.appService.getUsers(userParameters);
   }
 

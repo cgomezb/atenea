@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { CreateUserResponse, DeleteUserResponse, Page, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
+import { CreateUserResponse, DeleteUserResponse, User, UserParameters, UserResponse } from '@atenea/api-interfaces';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -41,8 +41,7 @@ export class UserService {
   }
 
   private reloadUsers(): void {
-    const page: Page = defaultPagination;
-    this.getUsers({ page });
+    this.getUsers({ page: defaultPagination });
   }
 
   private getUsers(userParameters: Partial<UserParameters>): void {

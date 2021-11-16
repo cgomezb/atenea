@@ -20,6 +20,10 @@ export class UserQuery extends Query<UserState> {
     this.select(['totalCount', 'page'])
       .pipe(map(({ totalCount, page: { page: currentPage } }) => ( { totalCount, currentPage } )));
 
+  public currentQuery(): string {
+    return this.store.getValue()?.query;
+  }
+
   constructor(protected store: UserStore) {
     super(store);
   }
