@@ -32,3 +32,11 @@
     border: 1px solid #d0d0d0;
   }
 }
+
+.user-actions {
+  &__button {
+    &:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
+}

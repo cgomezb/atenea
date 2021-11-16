@@ -9,11 +9,13 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { LearningDialogComponent } from './learning-dialog/learning-dialog.component';
 
 @NgModule({
   declarations: [
     UserComponent,
-    CreateUserDialogComponent
+    CreateUserDialogComponent,
+    LearningDialogComponent
   ],
   imports: [
     UserRoutingModule,

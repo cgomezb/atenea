@@ -7,6 +7,7 @@ import { PageOption, pageOptions } from '../../shared/pagination/pagination-mode
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { CreateUserDialogComponent } from './create-user-dialog/create-user-dialog.component';
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
+import { LearningDialogComponent } from './learning-dialog/learning-dialog.component';
 
 @Component({
   selector: 'atenea-user',
@@ -23,6 +24,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   createDialogConfig: MatDialogConfig = new MatDialogConfig();
   deleteDialogConfig: MatDialogConfig = new MatDialogConfig();
+  learningDialogConfig: MatDialogConfig = new MatDialogConfig();
 
   constructor(
     private userService: UserService,
@@ -68,8 +70,20 @@ export class UserComponent implements OnInit, OnDestroy {
       .subscribe(() => this.deleteUser(id));
   }
 
-  onLearningDialogOpened(user: User) {
-    console.log(user);
+  onLearningDialogOpened({ learnings }: User) {
+    if (!learnings?.length) {
+      return;
+    }
+
+    this.learningDialogConfig = {
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        learnings
+      }
+    }
+
+    this.dialog.open(LearningDialogComponent, this.learningDialogConfig);
   }
 
   ngOnDestroy(): void {

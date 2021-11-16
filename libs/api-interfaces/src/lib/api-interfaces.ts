@@ -7,7 +7,7 @@ export interface User {
   id?: string;
   name: string;
   email: string;
-  learnings?: Learning[];
+  learnings?: string[];
 }
 
 // Parameters

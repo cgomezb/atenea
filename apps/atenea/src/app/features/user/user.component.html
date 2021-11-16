@@ -14,7 +14,7 @@
 
       </div>
       <div class="user-header__actions">
-        <button (click)="onUserCreated()">New</button>
+        <button class="mat-raised-button mat-primary" (click)="onUserCreated()">New</button>
       </div>
     </div>
     <div class="user-body">
@@ -30,9 +30,16 @@
               <td>{{user.id}}</td>
               <td>{{user.name}}</td>
               <td>{{user.email}}</td>
-              <td>
-                <button (click)="onLearningDialogOpened(user)">Learnings</button>
-                <button (click)="onUserDeleted(user)">Delete</button>
+              <td class="user-actions">
+                <button
+                  *ngIf="user.learnings?.length"
+                  class="user-actions__button mat-raised-button mat-primary"
+                  (click)="onLearningDialogOpened(user)"
+                >Learnings</button>
+                <button
+                  class="user-actions__button mat-raised-button mat-primary"
+                  (click)="onUserDeleted(user)"
+                >Delete</button>
               </td>
             </tr>
         </atenea-list>
